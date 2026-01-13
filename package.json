@@ -6,7 +6,7 @@
     "private": true,
     "scripts": {
         "build": "d2-app-scripts build",
-        "start": "d2-app-scripts start --proxy https://eidsr.health.go.ug",
+        "start": "d2-app-scripts start --proxy https://tests.dhis2.hispuganda.org/eidsr",
         "test": "d2-app-scripts test",
         "deploy": "d2-app-scripts deploy"
     },
@@ -23,7 +23,15 @@
         "@tanstack/react-db": "^0.1.25",
         "@tanstack/react-query": "^5.90.2",
         "@tanstack/react-router": "^1.132.31",
+        "@types/lodash": "^4.17.20",
+        "@xstate/react": "^6.0.0",
         "antd": "^5.27.4",
+        "dayjs": "^1.11.18",
+        "dexie": "^4.2.0",
+        "dexie-react-hooks": "^4.2.0",
+        "lodash": "^4.17.21",
+        "xstate": "^5.24.0",
         "zod": "^4.1.11"
-    }
+    },
+    "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
