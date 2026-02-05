@@ -13,6 +13,7 @@ import {
     DashboardOutlined,
     MailOutlined,
     BellOutlined,
+    BarChartOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
@@ -36,10 +37,15 @@ export const RootRoute = createRootRouteWithContext<{
 });
 
 const items: MenuItem[] = [
+    // {
+    //     key: "/",
+    //     label: <Link to="/">Dashboard</Link>,
+    //     icon: <DashboardOutlined />,
+    // },
     {
-        key: "/",
-        label: <Link to="/">Dashboard</Link>,
-        icon: <DashboardOutlined />,
+        key: "/dashboard2",
+        label: <Link to="/dashboard2">Dashboard</Link>,
+        icon: <BarChartOutlined />,
     },
     {
         key: "/sms",

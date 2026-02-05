@@ -13,6 +13,7 @@
     "devDependencies": {
         "@dhis2/cli-app-scripts": "^12.8.0",
         "@types/jest": "^30.0.0",
+        "@types/leaflet": "^1.9.21",
         "@types/react": "^19.2.0",
         "@types/react-dom": "^19.2.0",
         "typescript": "^5"
@@ -29,7 +30,9 @@
         "dayjs": "^1.11.18",
         "dexie": "^4.2.0",
         "dexie-react-hooks": "^4.2.0",
+        "leaflet": "^1.9.4",
         "lodash": "^4.17.21",
+        "react-leaflet": "^4.2.1",
         "xstate": "^5.24.0",
         "zod": "^4.1.11"
     },

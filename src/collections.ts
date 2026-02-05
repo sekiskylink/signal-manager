@@ -46,17 +46,36 @@ export const querySignals = async ({
     search,
     engine,
 }: {
-    search: OnChange;
+    search: OnChange & {
+        startDate?: string;
+        endDate?: string;
+        orgUnit?: string;
+        ouMode?: string;
+    };
     engine: ReturnType<typeof useDataEngine>;
 }) => {
     const params = new URLSearchParams({
         pageSize: `${search.pagination.pageSize || 12}`,
         page: `${search.pagination.current || 1}`,
         programStage: "Nnnqw1XKpZL",
-        ouMode: "ALL",
+        // ouMode: "ALL",
         order: "updatedAt:desc",
         totalPages: "true",
     });
+
+    if (search.orgUnit) {
+        params.set("orgUnit", search.orgUnit)
+        params.set("ouMode", search.ouMode || "DESCENDANTS");
+    } else {
+        params.set("ouMode", search.ouMode || "ALL");
+    }
+
+    if (search.startDate) {
+        params.set("startDate", search.startDate);
+    }
+    if (search.endDate) {
+        params.set("endDate", search.endDate);
+    }
 
     for (const [filterKey, filterValues] of Object.entries(
         search?.filters || {},
@@ -252,11 +271,14 @@ export const totalSignalsQueryOptions = (
 };
 export const signalsQueryOptions = (
     engine: ReturnType<typeof useDataEngine>,
-    search: OnChange,
+    search: OnChange & { startDate?: string; endDate?: string; orgUnit?: string },
 ) => {
     return queryOptions({
         queryKey: [
             "signals-data",
+            search.startDate || null,
+            search.endDate || null,
+            search.orgUnit || null,
             Object.values(search?.filters || {})
                 .flat()
                 .sort()
@@ -274,6 +296,7 @@ export const initialQueryOptions = (engine: ReturnType<typeof useDataEngine>) =>
             const {
                 programStage,
                 me,
+                districtGeojson,
                 programRuleVariables: { programRuleVariables },
                 programRules: { programRules },
             } = (await engine.query({
@@ -286,6 +309,9 @@ export const initialQueryOptions = (engine: ReturnType<typeof useDataEngine>) =>
                 me: {
                     resource: "me",
                     params: { fields: "organisationUnits[id,name,level]" },
+                },
+                districtGeojson: {
+                    resource: `organisationUnits.geojson?level=3`,
                 },
                 programRules: {
                     resource: `programRules.json`,
@@ -309,6 +335,21 @@ export const initialQueryOptions = (engine: ReturnType<typeof useDataEngine>) =>
                         name: string;
                         level: number;
                     }[];
+                };
+                districtGeojson: {
+                    type: string;
+                    features: GeoJSON.Feature<GeoJSON.Polygon | GeoJSON.MultiPolygon>[];
+                    // features: {
+                    //     type: string;
+                    //     id: string;
+                    //     geometry: GeoJSON.Feature<GeoJSON.Polygon | GeoJSON.MultiPolygon>;
+                    //     properties: {
+                    //         name: string;
+                    //         code: string;
+                    //         level: string;
+                    //     };
+                    // }[];
+
                 };
                 programRules: { programRules: ProgramRule[] };
                 programRuleVariables: {
@@ -386,6 +427,7 @@ export const initialQueryOptions = (engine: ReturnType<typeof useDataEngine>) =>
                     ["name"],
                     ["asc"],
                 ).map((ou) => ({ label: ou.name, value: ou.id })),
+                districtGeojson,
                 programRuleVariables,
                 programRules,
             };

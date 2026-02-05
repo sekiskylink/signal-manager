@@ -13,11 +13,13 @@ import { SignalsRoute } from "./routes/signals";
 import { SignalsIndexRoute } from "./routes/signals.index";
 import { SMSRoute } from "./routes/sms";
 import { SMSIndexRoute } from "./routes/sms.index";
+import { Dashboard2Route } from "./routes/dashboard2";
 
 const routeTree = RootRoute.addChildren([
     IndexRoute,
     SignalsRoute.addChildren([SignalsIndexRoute]),
     SMSRoute.addChildren([SMSIndexRoute]),
+    Dashboard2Route,
 ]);
 export const router = createRouter({
     routeTree,
